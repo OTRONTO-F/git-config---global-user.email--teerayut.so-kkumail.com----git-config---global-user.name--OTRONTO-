@@ -1,29 +1,35 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Heart, X, MessageCircle, Shield, Sparkles } from 'lucide-react';
-import { Card, CardContent } from './components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import AuthPages from './components/AuthPages';
+import minnyProfile from './assets/images/minny.jpg';
 
-const HomePage = () => {
+const HomePage = ({ onAuthClick }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50">
       {/* Enhanced Navbar with backdrop blur and smooth transitions */}
       <nav className="bg-white/70 backdrop-blur-xl border-b border-gray-100 fixed w-full top-0 z-50 transition-all duration-300 hover:bg-white/90">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            <Link to="/" className="flex items-center group">
+            <button onClick={() => onAuthClick('home')} className="flex items-center group">
               <Heart className="w-8 h-8 text-pink-500 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
               <span className="ml-2 text-xl font-semibold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent hover:from-purple-500 hover:to-pink-500 transition-all duration-300">
                 Love Finder
               </span>
-            </Link>
+            </button>
             <div className="flex space-x-4">
-              <Link to="/auth" className="px-4 py-2 text-gray-600 hover:text-gray-900 font-medium transition-colors duration-300 hover:bg-pink-50 rounded-lg">
+              <button 
+                onClick={() => onAuthClick('auth')} 
+                className="px-4 py-2 text-gray-600 hover:text-gray-900 font-medium transition-colors duration-300 hover:bg-pink-50 rounded-lg"
+              >
                 เข้าสู่ระบบ
-              </Link>
-              <Link to="/auth" className="px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-pink-200 hover:scale-105">
+              </button>
+              <button 
+                onClick={() => onAuthClick('auth')}
+                className="px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-pink-200 hover:scale-105"
+              >
                 สมัครสมาชิก
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -41,7 +47,7 @@ const HomePage = () => {
           <p className="text-xl text-gray-600 mb-8 transition-all duration-300 hover:scale-105">
             เริ่มต้นค้นหาคู่ที่ใช่สำหรับคุณ ด้วยระบบจับคู่อัจฉริยะของเรา
           </p>
-          <button className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full text-lg font-medium transition-all duration-300 hover:shadow-xl hover:shadow-pink-200/50 hover:scale-105 hover:-translate-y-1">
+          <button onClick={() => onAuthClick('auth')} className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full text-lg font-medium transition-all duration-300 hover:shadow-xl hover:shadow-pink-200/50 hover:scale-105 hover:-translate-y-1">
             เริ่มต้นใช้งาน
           </button>
         </div>
@@ -96,7 +102,7 @@ const HomePage = () => {
           <Card className="overflow-hidden group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
             <div className="relative overflow-hidden">
               <img
-                src="/api/placeholder/400/500"
+                src={minnyProfile}
                 alt="Profile"
                 className="w-full h-[500px] object-cover transition-transform duration-500 group-hover:scale-105"
               />
@@ -124,13 +130,20 @@ const HomePage = () => {
 };
 
 const App = () => {
+  const [currentPage, setCurrentPage] = useState('home');
+
+  const handleNavigation = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/auth" element={<AuthPages />} />
-      </Routes>
-    </Router>
+    <>
+      {currentPage === 'home' ? (
+        <HomePage onAuthClick={handleNavigation} />
+      ) : (
+        <AuthPages onBack={() => handleNavigation('home')} />
+      )}
+    </>
   );
 };
 
