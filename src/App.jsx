@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import { Heart, X, MessageCircle, Shield, Sparkles } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import AuthPages from './components/AuthPages';
+import ProfilePage from './components/ProfilePage';
+import ChatPage from './components/ChatSelectPage';
 import minnyProfile from './assets/images/minny.jpg';
 
+// HomePage Component with navigation
 const HomePage = ({ onAuthClick }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50">
-      {/* Enhanced Navbar with backdrop blur and smooth transitions */}
+      {/* Navbar remains the same */}
       <nav className="bg-white/70 backdrop-blur-xl border-b border-gray-100 fixed w-full top-0 z-50 transition-all duration-300 hover:bg-white/90">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            <button onClick={() => onAuthClick('home')} className="flex items-center group">
+            <button className="flex items-center group">
               <Heart className="w-8 h-8 text-pink-500 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
               <span className="ml-2 text-xl font-semibold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent hover:from-purple-500 hover:to-pink-500 transition-all duration-300">
                 Love Alam
@@ -19,13 +22,13 @@ const HomePage = ({ onAuthClick }) => {
             </button>
             <div className="flex space-x-4">
               <button 
-                onClick={() => onAuthClick('auth')} 
+                onClick={() => onAuthClick('login')} 
                 className="px-4 py-2 text-gray-600 hover:text-gray-900 font-medium transition-colors duration-300 hover:bg-pink-50 rounded-lg"
               >
                 เข้าสู่ระบบ
               </button>
               <button 
-                onClick={() => onAuthClick('auth')}
+                onClick={() => onAuthClick('register')}
                 className="px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-pink-200 hover:scale-105"
               >
                 สมัครสมาชิก
@@ -130,26 +133,82 @@ const HomePage = ({ onAuthClick }) => {
 };
 
 const App = () => {
+  // Enhanced state management
   const [currentPage, setCurrentPage] = useState('home');
+  const [authMode, setAuthMode] = useState('login'); // 'login' or 'register'
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  const handleNavigation = (page) => {
+  const handleNavigation = (page, mode = 'login') => {
+    setCurrentPage(page);
+    if (page === 'auth') {
+      setAuthMode(mode);
+    }
+  };
+
+  const handleLogin = (userData) => {
+    // Here you would typically make an API call to authenticate
+    setIsAuthenticated(true);
+    setCurrentUser(userData);
+    setCurrentPage('profile');
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setCurrentUser(null);
+    setCurrentPage('home');
+  };
+
+  const handleProfileComplete = (profileData) => {
+    // Here you would typically make an API call to update profile
+    setCurrentUser({ ...currentUser, ...profileData });
+    setCurrentPage('chat');
+  };
+
+  // Navigation guard - redirect to home if not authenticated
+  const guardedNavigation = (page) => {
+    if (!isAuthenticated && page !== 'home' && page !== 'auth') {
+      setCurrentPage('auth');
+      return;
+    }
     setCurrentPage(page);
   };
 
   return (
     <>
       {currentPage === 'home' && (
-        <HomePage onAuthClick={() => handleNavigation('auth')} />
+        <HomePage 
+          onAuthClick={(mode) => handleNavigation('auth', mode)} 
+        />
       )}
+      
       {currentPage === 'auth' && (
-        <AuthPages onBack={() => handleNavigation('home')} />
+        <AuthPages 
+          onBack={() => handleNavigation('home')}
+          onLogin={handleLogin}
+          isRegister={authMode === 'register'}
+          setIsRegister={(value) => setAuthMode(value ? 'register' : 'login')}
+        />
       )}
-      {currentPage === 'profile' && (
-        <ProfilePage onAuthClick={() => handleNavigation('proflie')} />
+      
+      {currentPage === 'profile' && isAuthenticated && (
+        <ProfilePage 
+          onBack={() => handleNavigation('home')}
+          onLogout={handleLogout}
+          onProfileComplete={handleProfileComplete}
+          userData={currentUser}
+        />
+      )}
+      
+      {currentPage === 'chat' && isAuthenticated && (
+        <ChatPage 
+          onBack={() => handleNavigation('profile')}
+          userData={currentUser}
+        />
       )}
     </>
   );
-};  
+};
 
 // Add these custom animations to your CSS/Tailwind config
 const customStyles = `
