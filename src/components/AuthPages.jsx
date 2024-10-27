@@ -26,12 +26,6 @@ const AuthPages = ({ onBack }) => {
     // Implement Phone Sign In logic here
     console.log('Phone Sign In:', phoneNumber);
     setIsLoading(false);
-    if (phoneNumber) {
-      alert('รหัส OTP ถูกส่งไปที่เบอร์โทรศัพท์ของคุณแล้ว');
-      navigate('/profile');
-    } else {
-      alert('กรุณากรอกเบอร์โทรศัพท์');
-    }
   };
 
   const handleEmailSignIn = (e) => {
