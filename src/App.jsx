@@ -14,7 +14,7 @@ const HomePage = ({ onAuthClick }) => {
             <button onClick={() => onAuthClick('home')} className="flex items-center group">
               <Heart className="w-8 h-8 text-pink-500 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
               <span className="ml-2 text-xl font-semibold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent hover:from-purple-500 hover:to-pink-500 transition-all duration-300">
-                Love Finder
+                Love Alam
               </span>
             </button>
             <div className="flex space-x-4">
@@ -138,14 +138,18 @@ const App = () => {
 
   return (
     <>
-      {currentPage === 'home' ? (
-        <HomePage onAuthClick={handleNavigation} />
-      ) : (
+      {currentPage === 'home' && (
+        <HomePage onAuthClick={() => handleNavigation('auth')} />
+      )}
+      {currentPage === 'auth' && (
         <AuthPages onBack={() => handleNavigation('home')} />
+      )}
+      {currentPage === 'profile' && (
+        <ProfilePage onAuthClick={() => handleNavigation('proflie')} />
       )}
     </>
   );
-};
+};  
 
 // Add these custom animations to your CSS/Tailwind config
 const customStyles = `

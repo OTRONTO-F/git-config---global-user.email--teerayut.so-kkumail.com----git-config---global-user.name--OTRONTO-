@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { ArrowLeft, Mail, Phone, Lock, User } from 'lucide-react';
+import { ArrowLeft, Mail, Phone, Lock, User } from 'lucide-react'; 
 
 const AuthPages = ({ onBack }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -26,6 +26,12 @@ const AuthPages = ({ onBack }) => {
     // Implement Phone Sign In logic here
     console.log('Phone Sign In:', phoneNumber);
     setIsLoading(false);
+    if (phoneNumber) {
+      alert('รหัส OTP ถูกส่งไปที่เบอร์โทรศัพท์ของคุณแล้ว');
+      navigate('/profile');
+    } else {
+      alert('กรุณากรอกเบอร์โทรศัพท์');
+    }
   };
 
   const handleEmailSignIn = (e) => {
@@ -34,6 +40,11 @@ const AuthPages = ({ onBack }) => {
     // Implement Email Sign In logic here
     console.log('Email Sign In:', email, password);
     setIsLoading(false);
+    if (email && password) {
+      navigate('/profile'); // เปลี่ยนเส้นทางไปที่ ProfilePage
+    } else {
+      alert('กรุณากรอกข้อมูลให้ครบ');
+    }
   };
 
   const handleRegister = (e) => {
@@ -62,7 +73,7 @@ const AuthPages = ({ onBack }) => {
                   placeholder="อีเมล"
                   className="pl-10"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.value)}
                   required
                 />
               </div>
@@ -73,7 +84,7 @@ const AuthPages = ({ onBack }) => {
                   placeholder="รหัสผ่าน"
                   className="pl-10"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.value)}
                   required
                 />
               </div>
@@ -97,7 +108,7 @@ const AuthPages = ({ onBack }) => {
                 placeholder="เบอร์โทรศัพท์"
                 className="pl-10"
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                onChange={(e) => setPhoneNumber(e.value)}
                 required
               />
             </div>
@@ -149,7 +160,7 @@ const AuthPages = ({ onBack }) => {
             placeholder="ชื่อ-นามสกุล"
             className="pl-10"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setName(e.value)}
             required
           />
         </div>
@@ -160,7 +171,7 @@ const AuthPages = ({ onBack }) => {
             placeholder="อีเมล"
             className="pl-10"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.value)}
             required
           />
         </div>
@@ -171,7 +182,7 @@ const AuthPages = ({ onBack }) => {
             placeholder="รหัสผ่าน"
             className="pl-10"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.value)}
             required
           />
         </div>
@@ -200,7 +211,7 @@ const AuthPages = ({ onBack }) => {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl text-center bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-            {isRegister ? 'สมัครสมาชิก Love Finder' : 'ยินดีต้อนรับสู่ Love Finder'}
+            {isRegister ? 'สมัครสมาชิก Love Alam' : 'ยินดีต้อนรับสู่ Love Alam'}
           </CardTitle>
         </CardHeader>
         <CardContent>
