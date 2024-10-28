@@ -3,7 +3,7 @@ import { Heart, X, MessageCircle, Shield, Sparkles } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import AuthPages from './components/AuthPages';
 import ProfilePage from './components/ProfilePage';
-import ChatPage from './components/ChatSelectPage';
+import ChatSelectPage from './components/ChatSelectPage';
 import minnyProfile from './assets/images/minny.jpg';
 
 // HomePage Component with navigation
@@ -201,7 +201,7 @@ const App = () => {
       )}
       
       {currentPage === 'chat' && isAuthenticated && (
-        <ChatPage 
+        <ChatSelectPage
           onBack={() => handleNavigation('profile')}
           userData={currentUser}
         />

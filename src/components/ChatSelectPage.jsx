@@ -1,185 +1,207 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import React, { useState } from 'react';
+import { MapPin, MessageCircle, User, Settings, X } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Search, MessageCircle, Heart } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Card } from '@/components/ui/card';
 
-const ChatSelectPage = () => {
-  const matches = [
-    {
-      id: 1,
-      name: 'นุชนารถ',
-      age: 25,
-      distance: '2 กม.',
-      matches: ['ชอบอ่านหนังสือ', 'เที่ยวต่างประเทศ'],
-      isOnline: true
-    },
-    {
-      id: 2,
-      name: 'วรรณา',
-      age: 28,
-      distance: '5 กม.',
-      matches: ['ทำอาหาร', 'ดูหนัง'],
-      isOnline: true
-    },
-    {
-      id: 3,
-      name: 'พิมพ์มาดา',
-      age: 24,
-      distance: '3 กม.',
-      matches: ['โยคะ', 'ถ่ายรูป'],
-      isOnline: false
-    },
-    {
-      id: 4,
-      name: 'กุลนิษฐ์',
-      age: 27,
-      distance: '1 กม.',
-      matches: ['วาดรูป', 'ดนตรี'],
-      isOnline: true
-    },
-  ];
+// Onboarding Component
+const Onboarding = ({ isOpen, onClose }) => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const totalSteps = 4;
 
-  const chats = [
+  const steps = [
     {
-      id: 1,
-      name: 'สมหญิง',
-      lastMessage: 'สวัสดีค่ะ ยินดีที่ได้รู้จักนะคะ',
-      timestamp: '10:30',
-      unread: 2,
-      isOnline: true,
-      matches: ['ชอบอ่านหนังสือ', 'ชอบท่องเที่ยว']
+      title: "ยินดีต้อนรับสู่ Love Alam",
+      content: "แอพพลิเคชั่นหาคู่ที่จะช่วยให้คุณค้นพบความรักที่แท้จริง"
     },
     {
-      id: 2,
-      name: 'สมศรี',
-      lastMessage: 'เย็นนี้ว่างไหมคะ?',
-      timestamp: '09:45',
-      unread: 0,
-      isOnline: true,
-      matches: ['ชอบทำอาหาร', 'รักสัตว์']
+      title: "การจับคู่อัจฉริยะ",
+      content: "เราใช้ AI เพื่อช่วยคุณค้นหาคู่ที่เหมาะสมที่สุด โดยวิเคราะห์จากความชอบและรูปแบบการใช้ชีวิตของคุณ"
     },
     {
-      id: 3,
-      name: 'สมใจ',
-      lastMessage: 'ขอบคุณที่แนะนำร้านอาหารนะคะ',
-      timestamp: 'เมื่อวาน',
-      unread: 0,
-      isOnline: false,
-      matches: ['ชอบดูหนัง', 'เล่นดนตรี']
+      title: "ความปลอดภัยมาก่อน",
+      content: "เราให้ความสำคัญกับความปลอดภัยของข้อมูลส่วนตัวของคุณ ทุกการติดต่อสื่อสารถูกเข้ารหัสและปกป้อง"
+    },
+    {
+      title: "ข้อตกลงการใช้งาน",
+      content: (
+        <ScrollArea className="h-60 w-full rounded-md border p-4">
+          <div className="space-y-4">
+            <h3 className="font-semibold">1. การใช้งานทั่วไป</h3>
+            <p>ผู้ใช้ต้องมีอายุ 18 ปีขึ้นไป</p>
+            <p>ห้ามใช้ข้อมูลเท็จหรือหลอกลวง</p>
+            
+            <h3 className="font-semibold">2. ความเป็นส่วนตัว</h3>
+            <p>เราจะปกป้องข้อมูลส่วนตัวของคุณตามนโยบายความเป็นส่วนตัว</p>
+            <p>คุณสามารถควบคุมข้อมูลที่แสดงในโปรไฟล์ได้</p>
+            
+            <h3 className="font-semibold">3. การใช้งานที่ไม่เหมาะสม</h3>
+            <p>ห้ามใช้แอพในทางที่ผิดกฎหมายหรือละเมิดสิทธิผู้อื่น</p>
+            <p>ห้ามส่งเนื้อหาที่ไม่เหมาะสมหรือก่อกวนผู้อื่น</p>
+            
+            <h3 className="font-semibold">4. การยกเลิกบัญชี</h3>
+            <p>คุณสามารถยกเลิกบัญชีได้ทุกเมื่อ</p>
+            <p>เราจะลบข้อมูลของคุณตามนโยบายการลบข้อมูล</p>
+          </div>
+        </ScrollArea>
+      )
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50">
-      <Card className="max-w-md mx-auto h-screen flex flex-col">
-        <CardHeader className="border-b bg-white shadow-sm space-y-4">
-          <div className="flex justify-between items-center">
-            <CardTitle className="text-2xl">การจับคู่</CardTitle>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="text-purple-600 hover:text-purple-700"
-            >
-              ดูทั้งหมด
-            </Button>
-          </div>
-          
-          {/* Matching Profiles Section */}
-          <div className="overflow-x-auto pb-4 -mx-6 px-6">
-            <div className="flex gap-4">
-              {matches.map((match) => (
-                <div
-                  key={match.id}
-                  className="flex-shrink-0 w-32 group cursor-pointer"
-                >
-                  <div className="relative">
-                    <img
-                      src="/api/placeholder/128/160"
-                      alt={match.name}
-                      className="w-32 h-40 object-cover rounded-lg shadow-md group-hover:shadow-lg transition-shadow"
-                    />
-                    {match.isOnline && (
-                      <div className="absolute top-2 right-2 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
-                    )}
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3 rounded-b-lg">
-                      <p className="text-white font-medium">{match.name}</p>
-                      <p className="text-white/80 text-sm">{match.age} • {match.distance}</p>
-                    </div>
-                    <Button
-                      size="icon"
-                      className="absolute top-2 left-2 w-8 h-8 rounded-full bg-white/90 hover:bg-white shadow-sm hover:shadow opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <Heart className="h-4 w-4 text-pink-500" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-center">
+            {steps[currentStep - 1].title}
+          </DialogTitle>
+        </DialogHeader>
+        
+        <div className="py-4">
+          {steps[currentStep - 1].content}
+        </div>
 
-          {/* Search Bar */}
-          <div className="relative">
-            <Input
-              placeholder="ค้นหาการสนทนา..."
-              className="pl-10 rounded-full"
-            />
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-          </div>
-        </CardHeader>
-
-        {/* Chat List */}
-        <CardContent className="flex-1 overflow-y-auto p-0">
-          {chats.map((chat) => (
+        <div className="flex justify-center gap-2 my-4">
+          {Array.from({ length: totalSteps }).map((_, idx) => (
             <div
-              key={chat.id}
-              className="p-4 border-b hover:bg-gray-50 transition-colors cursor-pointer flex items-center gap-4"
+              key={idx}
+              className={`h-2 w-2 rounded-full transition-all duration-300 ${
+                idx + 1 <= currentStep ? 'bg-pink-500' : 'bg-gray-200'
+              }`}
+            />
+          ))}
+        </div>
+
+        <DialogFooter className="flex gap-2">
+          {currentStep < totalSteps ? (
+            <Button
+              className="w-full"
+              onClick={() => setCurrentStep(currentStep + 1)}
             >
-              <div className="relative">
-                <img
-                  src="/api/placeholder/48/48"
-                  alt={chat.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                {chat.isOnline && (
-                  <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
-                )}
-              </div>
+              ถัดไป
+            </Button>
+          ) : (
+            <Button
+              className="w-full bg-gradient-to-r from-pink-500 to-purple-500"
+              onClick={onClose}
+            >
+              ยอมรับและเริ่มต้นใช้งาน
+            </Button>
+          )}
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-medium">{chat.name}</h3>
-                  <span className="text-xs text-gray-500">{chat.timestamp}</span>
-                </div>
-                
-                <div className="flex items-center gap-2 mt-1">
-                  <MessageCircle className="h-4 w-4 text-gray-400" />
-                  <p className="text-sm text-gray-600 truncate">{chat.lastMessage}</p>
-                </div>
+// Bottom Navigation Component
+const BottomNavigation = ({ currentPage, onNavigate }) => {
+  return (
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg">
+      <div className="max-w-md mx-auto flex justify-around items-center h-16">
+        <button
+          onClick={() => onNavigate('nearby')}
+          className={`flex flex-col items-center space-y-1 ${
+            currentPage === 'nearby' ? 'text-pink-500' : 'text-gray-500'
+          }`}
+        >
+          <MapPin className="h-6 w-6" />
+          <span className="text-xs">ใกล้ตัว</span>
+        </button>
 
+        <button
+          onClick={() => onNavigate('chat')}
+          className={`flex flex-col items-center space-y-1 ${
+            currentPage === 'chat' ? 'text-pink-500' : 'text-gray-500'
+          }`}
+        >
+          <MessageCircle className="h-6 w-6" />
+          <span className="text-xs">แชท</span>
+        </button>
+
+        <button
+          onClick={() => onNavigate('profile')}
+          className={`flex flex-col items-center space-y-1 ${
+            currentPage === 'profile' ? 'text-pink-500' : 'text-gray-500'
+          }`}
+        >
+          <User className="h-6 w-6" />
+          <span className="text-xs">โปรไฟล์</span>
+        </button>
+
+        <button
+          onClick={() => onNavigate('settings')}
+          className={`flex flex-col items-center space-y-1 ${
+            currentPage === 'settings' ? 'text-pink-500' : 'text-gray-500'
+          }`}
+        >
+          <Settings className="h-6 w-6" />
+          <span className="text-xs">ตั้งค่า</span>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// Nearby Users Component
+const NearbyUsers = () => {
+  const [nearbyUsers] = useState([
+    { id: 1, name: 'มินนี่', age: 25, distance: 120, interests: ['ท่องเที่ยว', 'ถ่ายรูป'] },
+    { id: 2, name: 'แนน', age: 23, distance: 80, interests: ['อ่านหนังสือ', 'ดูหนัง'] },
+    { id: 3, name: 'พลอย', age: 27, distance: 150, interests: ['ทำอาหาร', 'โยคะ'] },
+  ]);
+
+  return (
+    <div className="max-w-md mx-auto p-4 mb-16">
+      <h2 className="text-xl font-semibold mb-4">ผู้ใช้ใกล้ตัวคุณ</h2>
+      <div className="space-y-4">
+        {nearbyUsers.map(user => (
+          <Card key={user.id} className="p-4 hover:shadow-lg transition-shadow">
+            <div className="flex items-center gap-4">
+              <img
+                src="/api/placeholder/56/56"
+                alt={user.name}
+                className="w-14 h-14 rounded-full object-cover"
+              />
+              <div className="flex-1">
+                <h3 className="font-medium">{user.name}, {user.age}</h3>
+                <p className="text-sm text-gray-500">ห่างจากคุณ {user.distance}m</p>
                 <div className="flex gap-2 mt-2">
-                  {chat.matches.map((match, index) => (
+                  {user.interests.map((interest, idx) => (
                     <span
-                      key={index}
-                      className="px-2 py-1 bg-gradient-to-r from-pink-500/10 to-purple-500/10 text-purple-700 rounded-full text-xs"
+                      key={idx}
+                      className="px-2 py-1 bg-pink-50 text-pink-600 rounded-full text-xs"
                     >
-                      {match}
+                      {interest}
                     </span>
                   ))}
                 </div>
-                
-                {chat.unread > 0 && (
-                  <div className="absolute top-4 right-4">
-                    <span className="bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                      {chat.unread}
-                    </span>
-                  </div>
-                )}
               </div>
             </div>
-          ))}
-        </CardContent>
-      </Card>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Main ChatSelectPage Component
+const ChatSelectPage = () => {
+  const [currentPage, setCurrentPage] = useState('nearby');
+  const [showOnboarding, setShowOnboarding] = useState(true);
+
+  const handleNavigate = (page) => {
+    setCurrentPage(page);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Onboarding isOpen={showOnboarding} onClose={() => setShowOnboarding(false)} />
+      
+      {currentPage === 'nearby' && <NearbyUsers />}
+      
+      <BottomNavigation currentPage={currentPage} onNavigate={handleNavigate} />
     </div>
   );
 };
