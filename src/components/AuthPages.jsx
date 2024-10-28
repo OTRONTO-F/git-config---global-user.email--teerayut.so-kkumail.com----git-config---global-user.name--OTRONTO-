@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { ArrowLeft, Mail, Phone, Lock, User } from 'lucide-react';
+import { ArrowLeft, Mail, Phone, Lock, Users } from 'lucide-react';
 
 // แยก LoginForm ออกมาเป็น component ต่างหาก
 const LoginForm = ({ 
@@ -126,7 +126,7 @@ const RegisterForm = ({
   <form onSubmit={handleRegister} className="space-y-4">
     <div className="space-y-2">
       <div className="relative">
-        <User className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+        <Users className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
         <Input
           type="text"
           placeholder="ชื่อ-นามสกุล"
