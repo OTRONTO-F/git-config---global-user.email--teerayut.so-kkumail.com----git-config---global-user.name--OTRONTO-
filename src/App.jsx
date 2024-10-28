@@ -5,6 +5,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import AuthPages from './components/AuthPages';
 import RegisterProfilePage from './components/RegisterProfilePage';
 import AppSelectPage from './components/AppSelectPage';
+import profileImage from './assets/images/profile.jpg';
 
 // Navbar Component
 const Navbar = ({ onAuthClick, isAuthenticated, onLogout, showBack, onBack }) => {
@@ -225,7 +226,7 @@ const HomePage = ({ onAuthClick }) => {
                   name: "มินนี่",
                   age: 25,
                   bio: "ชอบท่องเที่ยว ถ่ายรูป และทำอาหาร 📸✈️🍳\nกำลังมองหาคนที่มีความฝันและพร้อมที่จะเติบโตไปด้วยกัน",
-                  image: "/api/placeholder/400/500"
+                  image: profileImage
                 }}
                 onLike={() => onAuthClick('register')}
                 onPass={() => onAuthClick('register')}

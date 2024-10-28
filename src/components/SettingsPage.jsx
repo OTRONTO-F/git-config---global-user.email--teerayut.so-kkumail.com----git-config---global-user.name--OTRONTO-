@@ -86,7 +86,7 @@ const SettingItem = ({ item, onClick }) => {
 };
 
 const SettingsPage = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState('false');
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   const settingsSections = [

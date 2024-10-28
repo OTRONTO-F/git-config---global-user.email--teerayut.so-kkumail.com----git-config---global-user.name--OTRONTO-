@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Heart, X, MapPin, Briefcase, Coffee } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ImageFon from '@/assets/images/avatar-fon.jpg';
+import ImageNun from '@/assets/images/avatar-nun.jpg';
+import ImagePare from '@/assets/images/avatar-pare.jpg';
 
 const NearbyUsers = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,7 +20,7 @@ const NearbyUsers = () => {
       distance: 2,
       interests: ['ท่องเที่ยว', 'ถ่ายรูป', 'ดนตรี'],
       bio: 'ชอบเที่ยวต่างประเทศ ถ่ายรูปเป็นงานอดิเรก ชอบฟังเพลงแนว Lo-fi',
-      imageUrl: '/api/placeholder/400/500'
+      imageUrl: ImageFon
     },
     {
       id: 2,
@@ -27,7 +30,7 @@ const NearbyUsers = () => {
       distance: 3.5,
       interests: ['อ่านหนังสือ', 'ทำอาหาร', 'โยคะ'],
       bio: 'รักการอ่านหนังสือ ชอบทำอาหาร และรักการออกกำลังกาย',
-      imageUrl: '/api/placeholder/400/500'
+      imageUrl: ImageNun
     },
     {
       id: 3,
@@ -37,7 +40,7 @@ const NearbyUsers = () => {
       distance: 1.8,
       interests: ['ศิลปะ', 'ดูหนัง', 'คาเฟ่'],
       bio: 'ชอบวาดรูป หาร้านกาแฟน่านั่ง และดูหนังทุกแนว',
-      imageUrl: '/api/placeholder/400/500'
+      imageUrl: ImagePare
     }
   ];
 

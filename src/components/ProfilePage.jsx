@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Camera, Edit2, MapPin, Briefcase, Heart, Image, Star, Share2, Settings, Plus, X } from 'lucide-react';
+import { Camera, Edit2, MapPin, Briefcase, Heart, Image, Star, Share2, Settings, Plus, X, Mountain } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ProfileMod from '@/assets/images/profile-mod.jpg';
+import Moountain from '@/assets/images/mountain.jpg';
+import Bleach from '@/assets/images/bleach.jpg';
+
 
 const ImageGallery = ({ photos, onAddPhoto }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -83,7 +87,7 @@ const ProfilePage = () => {
     occupation: 'นักการตลาด',
     bio: 'ชอบท่องเที่ยว ถ่ายรูป และทำอาหาร ๆ กำลังมองหาคนที่มีความสนใจคล้าย ๆ กัน',
     interests: ['ท่องเที่ยว', 'ถ่ายรูป', 'ทำอาหาร', 'ดูหนัง', 'อ่านหนังสือ', 'เล่นดนตรี'],
-    photos: Array(6).fill('/api/placeholder/150/150'),
+    photos: [ Moountain, Bleach ],
     stats: {
       followers: 1234,
       following: 567,
@@ -106,7 +110,7 @@ const ProfilePage = () => {
         transition={{ duration: 0.3 }}
       >
         <img
-          src="/api/placeholder/400/400"
+          src= {ProfileMod}
           alt="Profile"
           className="w-full h-full object-cover"
         />

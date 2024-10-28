@@ -5,6 +5,9 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Search, Send, Phone, Video, MoreVertical, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import AvatarFon from '@/assets/images/avatar-fon.jpg';
+import AvatarNun from '@/assets/images/avatar-nun.jpg';
+import AvatarPare from '@/assets/images/avatar-pare.jpg';
 
 const ChatBubble = ({ message, isOwn }) => (
   <div className={`flex ${isOwn ? 'justify-end' : 'justify-start'} mb-4`}>
@@ -142,7 +145,7 @@ const ChatPage = () => {
       lastMessage: 'สวัสดีค่ะ ยินดีที่ได้รู้จัก',
       time: '12:30',
       unread: 2,
-      imageUrl: '/api/placeholder/50/50',
+      imageUrl: AvatarFon,
       online: true
     },
     {
@@ -151,7 +154,7 @@ const ChatPage = () => {
       lastMessage: 'วันนี้ไปไหนมาคะ?',
       time: '11:45',
       unread: 0,
-      imageUrl: '/api/placeholder/50/50',
+      imageUrl: AvatarNun,
       online: false
     },
     {
@@ -160,7 +163,7 @@ const ChatPage = () => {
       lastMessage: 'เย็นนี้ว่างไหมคะ?',
       time: '09:15',
       unread: 1,
-      imageUrl: '/api/placeholder/50/50',
+      imageUrl: AvatarPare,
       online: true
     }
   ];
