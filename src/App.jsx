@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Heart, X, MessageCircle, Shield, Sparkles } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import AuthPages from './components/AuthPages';
-import ProfilePage from './components/ProfilePage';
-import ChatSelectPage from './components/ChatSelectPage';
+import RegisterProfilePage from './components/RegisterProfilePage';
+import AppSelectPage from './components/AppSelectPage';
 import minnyProfile from './assets/images/minny.jpg';
 
 // HomePage Component with navigation
@@ -192,7 +192,7 @@ const App = () => {
       )}
       
       {currentPage === 'profile' && isAuthenticated && (
-        <ProfilePage 
+        <RegisterProfilePage 
           onBack={() => handleNavigation('home')}
           onLogout={handleLogout}
           onProfileComplete={handleProfileComplete}
@@ -201,7 +201,7 @@ const App = () => {
       )}
       
       {currentPage === 'chat' && isAuthenticated && (
-        <ChatSelectPage
+        <AppSelectPage
           onBack={() => handleNavigation('profile')}
           userData={currentUser}
         />
