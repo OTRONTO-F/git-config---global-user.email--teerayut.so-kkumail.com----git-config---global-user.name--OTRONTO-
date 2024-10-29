@@ -5,6 +5,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import AuthPages from './components/AuthPages';
 import RegisterProfilePage from './components/RegisterProfilePage';
 import AppSelectPage from './components/AppSelectPage';
+import InterestsSelectionPage from './components/InterestsSelectionPage';
 import profileImage from './assets/images/profile.jpg';
 
 // Navbar Component
@@ -393,6 +394,14 @@ const App = () => {
 
   const handleProfileComplete = useCallback((profileData) => {
     setCurrentUser(prev => ({ ...prev, ...profileData }));
+    setCurrentPage('interests'); // เปลี่ยนจาก 'chat' เป็น 'interests'
+  }, []);
+
+  const handleInterestsComplete = useCallback((interestsData) => {
+    setCurrentUser(prev => ({
+      ...prev,
+      interests: interestsData
+    }));
     setCurrentPage('chat');
     showNotification('อัพเดทโปรไฟล์สำเร็จ');
   }, []);
@@ -424,6 +433,14 @@ const App = () => {
           onLogout={handleLogout}
           onProfileComplete={handleProfileComplete}
           userData={currentUser}
+        />
+      )}
+
+      {currentPage === 'interests' && isAuthenticated && (
+        <InterestsSelectionPage
+          onBack={() => handleNavigation('profile')}
+          onComplete={handleInterestsComplete}
+          initialInterests={currentUser?.interests}
         />
       )}
       

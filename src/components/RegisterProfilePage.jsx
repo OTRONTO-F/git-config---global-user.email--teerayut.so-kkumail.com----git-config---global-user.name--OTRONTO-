@@ -85,11 +85,11 @@ const ProfilePage = ({ onBack, onLogout, onProfileComplete, userData }) => {
       setError(validationError);
       return;
     }
-
+  
     setIsSubmitting(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      onProfileComplete(profile);
+      onProfileComplete(profile); // นี่จะนำไปสู่หน้า InterestsSelectionPage
     } catch (err) {
       setError('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
     } finally {
